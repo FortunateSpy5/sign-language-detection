@@ -6,6 +6,7 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.callbacks import EarlyStopping
+from pickle import dump
 # from sklearn.metrics import accuracy_score
 
 df = pd.read_csv("connections.csv", index_col=0)
@@ -24,6 +25,9 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
 scaler = MinMaxScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
+
+# Save scaler for later use
+dump(scaler, open('scaler.pkl', 'wb'))
 
 # ANN Model
 model = Sequential()
