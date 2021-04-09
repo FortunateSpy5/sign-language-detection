@@ -6,7 +6,7 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.callbacks import EarlyStopping
-from sklearn.metrics import accuracy_score
+# from sklearn.metrics import accuracy_score
 
 df = pd.read_csv("connections.csv", index_col=0)
 
@@ -37,7 +37,7 @@ model.add(Dense(units=df['SIGN'].nunique(), activation='softmax'))
 model.compile(loss='categorical_crossentropy', metrics=['accuracy'], optimizer='adam')
 
 # Early Stopping Callback
-early_stop = EarlyStopping( monitor='val_loss', mode='min', verbose=1, patience=25)
+early_stop = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=25)
 
 # Training the model
 model.fit(
@@ -49,20 +49,18 @@ model.fit(
     callbacks=[early_stop]
 )
 
-# Prediction
-pred = model.predict(X_test)
+# # Prediction
+# pred = model.predict(X_test)
 
-# Reverse One Hot Encoding
-def get_sign(row):
-    for column in y.columns:
-        if row[column] == row.max():
-            return column[-1]
+# # Reverse One Hot Encoding
+# def get_sign(row):
+#     for column in y.columns:
+#         if row[column] == row.max():
+#             return column[-1]
+# y_test = y_test.apply(get_sign, axis=1)
+# pred = pd.DataFrame(pred, columns=y.columns).apply(get_sign, axis=1)
 
-
-y_test = y_test.apply(get_sign, axis=1)
-pred = pd.DataFrame(pred, columns=y.columns).apply(get_sign, axis=1)
-
-print(f"Accuracy: {accuracy_score(y_test, pred) * 100:.2f}")
+print(f"Accuracy: {model.evaluate(X_test, y_test)[1] * 100:.2f}")
 # Accuracy: 99.78
 
 # Save model
