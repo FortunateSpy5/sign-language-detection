@@ -1,8 +1,6 @@
 from sklearn.model_selection import train_test_split
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
@@ -64,4 +62,4 @@ print(accuracy_score(y_test, pred))
 # 0.9786780383795309
 
 # Save model
-model.save("ann_model.h5")
+# model.save("ann_model.h5")
