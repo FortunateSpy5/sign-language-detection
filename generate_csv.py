@@ -5,9 +5,9 @@ import pandas as pd
 import os
 
 
-def get_image_list():
+def get_image_list(dir="./images/"):
     # Get all the folder names
-    image_folders = os.listdir("./images/")
+    image_folders = os.listdir(dir)
 
     # Dictionary to store the information
     image_dict = {}
@@ -17,7 +17,7 @@ def get_image_list():
         # List of all images
         # Some files are missing (or improperly labelled)
         # As a result, only storing the first and last files wouldn't work
-        image_dict[folder] = os.listdir(f"./images/{folder}/")
+        image_dict[folder] = os.listdir(f"{dir}{folder}/")
 
     return image_dict
 
