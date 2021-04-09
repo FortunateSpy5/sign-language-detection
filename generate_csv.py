@@ -35,12 +35,30 @@ def get_connections_list(mp_hands):
         connections_dict[connection_name] = (first.value, second.value)
     return connections_dict
 
+def get_connections_list_2(mp_hands):
+    # Adding some connections manually to increase accuracy
+    # All landmark names and values: https://google.github.io/mediapipe/images/mobile/hand_landmarks.png
+    connections_dict = get_connections_list(mp_hands)
+    connections_dict.update({
+        "WRIST_TO_THUMB_TIP": (0, 4),
+        "WRIST_TO_INDEX_FINGER_TIP": (0, 8),
+        "WRIST_TO_MIDDLE_FINGER_TIP": (0, 12),
+        "WRIST_TO_RING_FINGER_TIP": (0, 16),
+        "WRIST_TO_PINKY_TIP": (0, 20),
+        "THUMB_TIP_TO_INDEX_FINGER_TIP": (4, 8),
+        "INDEX_FINGER_TIP_TO_MIDDLE_FINGER_TIP": (8, 12),
+        "MIDDLE_FINGER_TIP_TO_RING_FINGER_TIP": (12, 16),
+        "RING_FINGER_TIP_TO_PINKY_TIP": (16, 20),
+    })
+    return connections_dict
+
+
 def get_distance(first, second):
     # Calculate distance from two coordinates
     return np.sqrt(
         (first.x - second.x) ** 2 
         + (first.y - second.y) ** 2 
-        + (first.z - second.z) ** 2
+        # + (first.z - second.z) ** 2
     )
 
 def create_connections_csv():
@@ -49,7 +67,7 @@ def create_connections_csv():
     mp_hands = mp.solutions.hands
 
     # Run the functions to the get the image directory tree and connection dictionary
-    connections_dict = get_connections_list(mp_hands)
+    connections_dict = get_connections_list_2(mp_hands)
     image_dict = get_image_list()
 
     # List to store all the data to be put in the dataframe
@@ -78,6 +96,7 @@ def create_connections_csv():
                     row.append(get_distance(coordinates[values[0]], coordinates[values[1]]))
                 row.append(folder)
                 data.append(row)
+    
     # Create dataframe
     columns = list(connections_dict.keys())
     columns.append('SIGN')
