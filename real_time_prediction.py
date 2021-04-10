@@ -5,12 +5,12 @@ from tensorflow import keras
 import numpy as np
 import pandas as pd
 
-def get_df_values():
+def get_sign_list():
     df = pd.read_csv('connections.csv', index_col=0)
-    return df['SIGN'].unique(), list(df.columns).index('WRIST_TO_INDEX_FINGER_MCP')
+    return df['SIGN'].unique()
 
 def real_time_prediction():
-    sign_list, scaling_column_index = get_df_values()
+    sign_list = get_sign_list()
     mp_drawing = mp.solutions.drawing_utils
     mp_hands = mp.solutions.hands
     connections_dict = get_connections_list_2(mp_hands)
@@ -41,6 +41,7 @@ def real_time_prediction():
                     data.append(get_distance(coordinates[values[0]], coordinates[values[1]]))
                 
                 data = np.array([data])
+                data[0] /= data[0].max()
                 
                 model = keras.models.load_model('ann_model.h5')
                 pred = np.array(model(data))

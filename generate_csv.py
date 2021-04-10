@@ -38,37 +38,45 @@ def get_connections_list(mp_hands):
 def get_connections_list_2(mp_hands):
     # Adding some connections manually to increase accuracy
     # All landmark names and values: https://google.github.io/mediapipe/images/mobile/hand_landmarks.png
-    connections_dict = get_connections_list(mp_hands)
-    connections_dict.update({
+    # connections_dict = get_connections_list(mp_hands)
+    return {
+        "WRIST_TO_THUMB_MCP": (0, 2),
+        "WRIST_TO_THUMB_IP": (0, 3),
         "WRIST_TO_THUMB_TIP": (0, 4),
+        "WRIST_TO_INDEX_FINGER_PIP": (0, 6),
+        "WRIST_TO_INDEX_FINGER_DIP": (0, 7),
         "WRIST_TO_INDEX_FINGER_TIP": (0, 8),
+        "WRIST_TO_MIDDLE_FINGER_PIP": (0, 10),
+        "WRIST_TO_MIDDLE_FINGER_DIP": (0, 11),
         "WRIST_TO_MIDDLE_FINGER_TIP": (0, 12),
+        "WRIST_TO_RING_FINGER_PIP": (0, 14),
+        "WRIST_TO_RING_FINGER_DIP": (0, 15),
         "WRIST_TO_RING_FINGER_TIP": (0, 16),
+        "WRIST_TO_PINKY_PIP": (0, 18),
+        "WRIST_TO_PINKY_DIP": (0, 19),
         "WRIST_TO_PINKY_TIP": (0, 20),
-        "THUMB_TIP_TO_INDEX_FINGER_TIP": (4, 8),
-        "THUMB_TIP_TO_INDEX_FINGER_DIP": (4, 7),
-        "THUMB_TIP_TO_INDEX_FINGER_PIP": (4, 6),
-        "THUMB_TIP_TO_INDEX_FINGER_MCP": (4, 5),
-        "THUMB_TIP_TO_MIDDLE_FINGER_TIP": (4, 12),
-        "THUMB_TIP_TO_MIDDLE_FINGER_DIP": (4, 11),
-        "THUMB_TIP_TO_MIDDLE_FINGER_PIP": (4, 10),
-        "THUMB_TIP_TO_MIDDLE_FINGER_MCP": (4, 9),
-        "THUMB_TIP_TO_RING_FINGER_TIP": (4, 16),
-        "THUMB_TIP_TO_RING_FINGER_DIP": (4, 15),
-        "THUMB_TIP_TO_RING_FINGER_PIP": (4, 14),
-        "THUMB_TIP_TO_RING_FINGER_MCP": (4, 13),
-        "THUMB_TIP_TO_PINKY_TIP": (4, 20),
-        "THUMB_TIP_TO_PINKY_DIP": (4, 19),
-        "THUMB_TIP_TO_PINKY_PIP": (4, 18),
-        "THUMB_TIP_TO_PINKY_MCP": (4, 17),
-        "INDEX_FINGER_TIP_TO_MIDDLE_FINGER_TIP": (8, 12),
-        "INDEX_FINGER_TIP_TO_RING_FINGER_TIP": (8, 16),
-        "INDEX_FINGER_TIP_TO_PINKY_TIP": (8, 20),
+        "THUMB_MCP_TO_THUMB_TIP": (2, 4),
         "INDEX_FINGER_MCP_TO_INDEX_FINGER_TIP": (5, 8),
-        "MIDDLE_FINGER_TIP_TO_RING_FINGER_TIP": (12, 16),
-        "RING_FINGER_TIP_TO_PINKY_TIP": (16, 20),
-    })
-    return connections_dict
+        "MIDDLE_FINGER_MCP_TO_MIDDLE_FINGER_TIP": (9, 12),
+        "RING_FINGER_MCP_TO_RING_FINGER_TIP": (13, 16),
+        "PINKY_MCP_TO_PINKY_TIP": (17, 20),
+        "THUMB_TIP_TO_INDEX_FINGER_MCP": (4, 5),
+        "THUMB_TIP_TO_INDEX_FINGER_PIP": (4, 6),
+        "THUMB_TIP_TO_INDEX_FINGER_DIP": (4, 7),
+        "THUMB_TIP_TO_INDEX_FINGER_TIP": (4, 8),
+        "THUMB_TIP_TO_MIDDLE_FINGER_MCP": (4, 9),
+        "THUMB_TIP_TO_MIDDLE_FINGER_PIP": (4, 10),
+        "THUMB_TIP_TO_MIDDLE_FINGER_DIP": (4, 11),
+        "THUMB_TIP_TO_MIDDLE_FINGER_TIP": (4, 12),
+        "THUMB_TIP_TO_RING_FINGER_MCP": (4, 13),
+        "THUMB_TIP_TO_RING_FINGER_PIP": (4, 14),
+        "THUMB_TIP_TO_RING_FINGER_DIP": (4, 15),
+        "THUMB_TIP_TO_RING_FINGER_TIP": (4, 16),
+        "THUMB_TIP_TO_PINKY_MCP": (4, 17),
+        "THUMB_TIP_TO_PINKY_PIP": (4, 18),
+        "THUMB_TIP_TO_PINKY_DIP": (4, 19),
+        "THUMB_TIP_TO_PINKY_TIP": (4, 20)
+    }
 
 
 def get_distance(first, second):
