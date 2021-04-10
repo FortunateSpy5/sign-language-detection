@@ -1,33 +1,31 @@
 from sklearn.model_selection import train_test_split
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.callbacks import EarlyStopping
-from pickle import dump
-# from sklearn.metrics import accuracy_score
 
 df = pd.read_csv("connections.csv", index_col=0)
 
 # Feature selection
-X = df.drop('SIGN', axis=1)
+X = df.drop(X.columns, axis=1)
 y = df[['SIGN']]
 
 # One hot encoding
 y = pd.get_dummies(y)
 
+# Scaling X
+# Such a method is implemented to make sure that the 
+# scale of the hand is independent of the image size
+def scale_x(row):
+    for column in X.columns:
+        row[column] /= row['WRIST_TO_INDEX_FINGER_MCP']
+    return row
+
+X = X.apply(scale_x, axis=1)
+
 # Train Test Split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
-
-# Scaling
-scaler = MinMaxScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
-
-# Save scaler for later use
-dump(scaler, open('scaler.pkl', 'wb'))
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 # ANN Model
 model = Sequential()
@@ -53,19 +51,17 @@ model.fit(
     callbacks=[early_stop]
 )
 
-# # Prediction
-# pred = model.predict(X_test)
-
-# # Reverse One Hot Encoding
-# def get_sign(row):
-#     for column in y.columns:
-#         if row[column] == row.max():
-#             return column[-1]
-# y_test = y_test.apply(get_sign, axis=1)
-# pred = pd.DataFrame(pred, columns=y.columns).apply(get_sign, axis=1)
-
 print(f"Accuracy: {model.evaluate(X_test, y_test)[1] * 100:.2f}")
-# Accuracy: 99.78
+# Accuracy: 99.78 (48 connections)
 
+# Final Training
+model.fit(
+    x=X.values,
+    y=y.values,
+    epochs=500,
+    validation_data=(X.values, y.values),
+    verbose=1,
+    callbacks=[early_stop]
+)
 # Save model
 model.save("ann_model.h5")

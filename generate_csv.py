@@ -46,7 +46,25 @@ def get_connections_list_2(mp_hands):
         "WRIST_TO_RING_FINGER_TIP": (0, 16),
         "WRIST_TO_PINKY_TIP": (0, 20),
         "THUMB_TIP_TO_INDEX_FINGER_TIP": (4, 8),
+        "THUMB_TIP_TO_INDEX_FINGER_DIP": (4, 7),
+        "THUMB_TIP_TO_INDEX_FINGER_PIP": (4, 6),
+        "THUMB_TIP_TO_INDEX_FINGER_MCP": (4, 5),
+        "THUMB_TIP_TO_MIDDLE_FINGER_TIP": (4, 12),
+        "THUMB_TIP_TO_MIDDLE_FINGER_DIP": (4, 11),
+        "THUMB_TIP_TO_MIDDLE_FINGER_PIP": (4, 10),
+        "THUMB_TIP_TO_MIDDLE_FINGER_MCP": (4, 9),
+        "THUMB_TIP_TO_RING_FINGER_TIP": (4, 16),
+        "THUMB_TIP_TO_RING_FINGER_DIP": (4, 15),
+        "THUMB_TIP_TO_RING_FINGER_PIP": (4, 14),
+        "THUMB_TIP_TO_RING_FINGER_MCP": (4, 13),
+        "THUMB_TIP_TO_PINKY_TIP": (4, 20),
+        "THUMB_TIP_TO_PINKY_DIP": (4, 19),
+        "THUMB_TIP_TO_PINKY_PIP": (4, 18),
+        "THUMB_TIP_TO_PINKY_MCP": (4, 17),
         "INDEX_FINGER_TIP_TO_MIDDLE_FINGER_TIP": (8, 12),
+        "INDEX_FINGER_TIP_TO_RING_FINGER_TIP": (8, 16),
+        "INDEX_FINGER_TIP_TO_PINKY_TIP": (8, 20),
+        "INDEX_FINGER_MCP_TO_INDEX_FINGER_TIP": (5, 8),
         "MIDDLE_FINGER_TIP_TO_RING_FINGER_TIP": (12, 16),
         "RING_FINGER_TIP_TO_PINKY_TIP": (16, 20),
     })
@@ -58,7 +76,7 @@ def get_distance(first, second):
     return np.sqrt(
         (first.x - second.x) ** 2 
         + (first.y - second.y) ** 2 
-        # + (first.z - second.z) ** 2
+        + (first.z - second.z) ** 2
     )
 
 def create_connections_csv():

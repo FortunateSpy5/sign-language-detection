@@ -4,14 +4,13 @@ from generate_csv import get_connections_list_2, get_distance
 from tensorflow import keras
 import numpy as np
 import pandas as pd
-from pickle import load
 
-def get_sign_list():
+def get_df_values():
     df = pd.read_csv('connections.csv', index_col=0)
-    return df['SIGN'].unique()
+    return df['SIGN'].unique(), list(df.columns).index('WRIST_TO_INDEX_FINGER_MCP')
 
 def real_time_prediction():
-    sign_list = get_sign_list()
+    sign_list, scaling_column_index = get_df_values()
     mp_drawing = mp.solutions.drawing_utils
     mp_hands = mp.solutions.hands
     connections_dict = get_connections_list_2(mp_hands)
@@ -42,8 +41,6 @@ def real_time_prediction():
                     data.append(get_distance(coordinates[values[0]], coordinates[values[1]]))
                 
                 data = np.array([data])
-                scaler = load(open('scaler.pkl', 'rb'))
-                data = scaler.transform(data)
                 
                 model = keras.models.load_model('ann_model.h5')
                 pred = np.array(model(data))
