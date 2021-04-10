@@ -4,41 +4,21 @@ import numpy as np
 import pandas as pd
 import os
 
-
 def get_image_list(dir="./images/"):
     # Get all the folder names
     image_folders = os.listdir(dir)
-
     # Dictionary to store the information
     image_dict = {}
-
     # Iterating over all the folders
     for folder in image_folders:
         # List of all images
         # Some files are missing (or improperly labelled)
         # As a result, only storing the first and last files wouldn't work
         image_dict[folder] = os.listdir(f"{dir}{folder}/")
-
     return image_dict
 
-
-def get_connections_list(mp_hands):
-    # Dictionary to store the collections
-    connections_dict = {}
-    # mp_hands.HAND_CONNECTIONS is a set, so iterating over it
-    for connection in mp_hands.HAND_CONNECTIONS:
-        # Extracting the landmarks names
-        first, second = connection[0], connection[1]
-        # Creating connection name
-        connection_name = f"{first.name}_TO_{second.name}"
-        # Add connection name and tuple of values to dictionary
-        connections_dict[connection_name] = (first.value, second.value)
-    return connections_dict
-
-def get_connections_list_2(mp_hands):
-    # Adding some connections manually to increase accuracy
+def get_connections_list():
     # All landmark names and values: https://google.github.io/mediapipe/images/mobile/hand_landmarks.png
-    # connections_dict = get_connections_list(mp_hands)
     return {
         "WRIST_TO_THUMB_MCP": (0, 2),
         "WRIST_TO_THUMB_IP": (0, 3),
@@ -78,7 +58,6 @@ def get_connections_list_2(mp_hands):
         "THUMB_TIP_TO_PINKY_TIP": (4, 20)
     }
 
-
 def get_distance(first, second):
     # Calculate distance from two coordinates
     return np.sqrt(
@@ -93,7 +72,7 @@ def create_connections_csv():
     mp_hands = mp.solutions.hands
 
     # Run the functions to the get the image directory tree and connection dictionary
-    connections_dict = get_connections_list_2(mp_hands)
+    connections_dict = get_connections_list()
     image_dict = get_image_list()
 
     # List to store all the data to be put in the dataframe

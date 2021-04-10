@@ -2,7 +2,7 @@ import mediapipe as mp
 import cv2
 import numpy as np
 import os
-from generate_csv import get_connections_list, get_image_list
+from generate_csv import get_image_list
 
 def process_images():
     # mediapipe code
@@ -10,7 +10,6 @@ def process_images():
     mp_hands = mp.solutions.hands
 
     # Run the functions to the get the image directory tree and connection dictionary
-    connections_dict = get_connections_list(mp_hands)
     image_dict = get_image_list()
 
     with mp_hands.Hands(static_image_mode=True, max_num_hands=1, min_detection_confidence=0.5) as hands:
