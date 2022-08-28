@@ -87,7 +87,7 @@ def create_connections_csv():
                 # Read image with OpenCV, flip, convert BGR to RGB
                 image = cv2.imread(f"./images/{folder}/{image_name}")
                 image = cv2.flip(image, 1)
-                image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
                 # Get coordinates from mediapipe
                 results = hands.process(image)
